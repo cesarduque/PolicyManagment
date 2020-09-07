@@ -7,8 +7,7 @@ namespace GAP.PolicyManagment.Infrastructure.Models
     {
         public Policy()
         {
-            this.Clients = new HashSet<Client>();
-            this.CoverageTypes = new HashSet<CoverageType>();
+            this.Clients = new HashSet<Client>();            
         }
 
         public int PolicyId { get; set; }
@@ -25,8 +24,6 @@ namespace GAP.PolicyManagment.Infrastructure.Models
 
         public RiskType RiskType { get; set; }
 
-        public virtual ICollection<Client> Clients { get; set; }
-
-        public virtual ICollection<CoverageType> CoverageTypes { get; set; }
+        public virtual ICollection<Client> Clients { get; set; }        
     }
 }

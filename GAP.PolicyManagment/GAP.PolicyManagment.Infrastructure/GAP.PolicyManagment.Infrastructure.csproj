@@ -54,16 +54,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\202009062154213_DatabaseCreation1.cs" />
+    <Compile Include="Migrations\202009062154213_DatabaseCreation1.designer.cs">
+      <DependentUpon>202009062154213_DatabaseCreation1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\CoverageType.cs" />
     <Compile Include="Models\Policy.cs" />
+    <Compile Include="Models\PolicyCoverageType.cs" />
     <Compile Include="Models\RiskType.cs" />
+    <Compile Include="PolicyManagmentContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\CoverageTypeRepository.cs" />
+    <Compile Include="Repositories\PolicyCoverageTypeRepository.cs" />
     <Compile Include="Repositories\PolicyRepository.cs" />
     <Compile Include="Repositories\RiskTypeRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -74,6 +83,11 @@
       <Project>{8e2a351f-6553-4ebb-9e48-4e101c540d98}</Project>
       <Name>GAP.PolicyManagment.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202009062154213_DatabaseCreation1.resx">
+      <DependentUpon>202009062154213_DatabaseCreation1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

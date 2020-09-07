@@ -2,13 +2,17 @@
 using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GAP.PolicyManagment.Infrastructure.Repositories
 {
     public class RiskTypeRepository : BaseRepository, IRiskTypeRepository
     {
-        public RiskTypeRepository()
+        readonly PolicyManagmentContext _context;
+
+        public RiskTypeRepository(PolicyManagmentContext context)
         {
+            _context = context;
             MappingConfiguration();
         }
 
@@ -24,14 +28,20 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
 
         public RiskType Get(object code)
         {
-            throw new System.NotImplementedException();
+            var riskType = _context.RiskTypes.Find(code);
+            return mapping.Map<RiskType>(riskType);
         }
 
         public IEnumerable<RiskType> Get(RiskType entity)
         {
-            throw new System.NotImplementedException();
-        }
+            List<Models.RiskType> riskTypes = null;
 
-        
+            if (entity == null)
+            {
+                riskTypes = _context.RiskTypes.ToList();
+            }
+
+            return mapping.Map<IEnumerable<RiskType>>(riskTypes);
+        }        
     }   
 }
