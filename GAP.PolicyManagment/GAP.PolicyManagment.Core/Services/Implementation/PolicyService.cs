@@ -1,4 +1,5 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
+using GAP.PolicyManagment.Core.Repositories;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,13 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 {
     public class PolicyService : IPolicyService
     {
+        private readonly IPolicyRepository _policyRepository;
+
+        public PolicyService(IPolicyRepository policyRepository)
+        {
+            _policyRepository = policyRepository;
+        }
+
         public Policy Create(Policy entity)
         {
             throw new NotImplementedException();

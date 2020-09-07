@@ -1,4 +1,5 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
+using GAP.PolicyManagment.Core.Repositories;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,12 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 {
     public class RiskTypeService : IRiskTypeService
     {
+        private readonly IRiskTypeRepository _riskTypeRepository;
+
+        public RiskTypeService(IRiskTypeRepository riskTypeRepository)
+        {
+            _riskTypeRepository = riskTypeRepository;
+        }
         public RiskType Get(object code)
         {
             throw new NotImplementedException();
