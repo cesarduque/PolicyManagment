@@ -1,5 +1,4 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
-using GAP.PolicyManagment.Core.Repositories;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -8,11 +7,11 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 {
     public class CoverageTypeService : ICoverageTypeService
     {
-        private readonly ICoverageTypeRepository _coverageTypeRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CoverageTypeService(ICoverageTypeRepository coverageTypeRepository)
+        public CoverageTypeService(IUnitOfWork unitOfWork)
         {
-            _coverageTypeRepository = coverageTypeRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public CoverageType Get(object code)
@@ -22,7 +21,7 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 
         public IEnumerable<CoverageType> Get(CoverageType entity)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.CoverageType.Get(entity);
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IUpdatableBaseService<TEntity> where TEntity : class
     {
-        TEntity Update(TEntity entity);
+        void Update(TEntity entity);
     }   
 }

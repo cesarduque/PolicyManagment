@@ -17,9 +17,13 @@ namespace GAP.PolicyManagment.Core.Entities
 
         public double Price { get; set; }
 
+        public int RiskTypeId { get; set; }
+
         public RiskType RiskType { get; set; }
 
-        public virtual ICollection<Client> Clients { get; set; }
-        
+        public virtual ICollection<PolicyClient> PolicyClients { get; set; }
+
+        public virtual ICollection<PolicyCoverageType> PolicyCoverageTypes { get; set; }
+
     }
 }

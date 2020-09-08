@@ -22,14 +22,28 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             {
                 cfg.CreateMap<Policy, Models.Policy>()
                     .ReverseMap();
+                cfg.CreateMap<RiskType, Models.RiskType>()
+                    .ReverseMap();
+                cfg.CreateMap<CoverageType, Models.CoverageType>()
+                    .ReverseMap();
+                cfg.CreateMap<Client, Models.Client>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyCoverageType, Models.PolicyCoverageType>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyClient, Models.PolicyClient>()
+                    .ReverseMap();
             });
             mapping = config.CreateMapper();
         }
 
         public Policy Create(Policy entity)
         {
-            var policy = _context.Policies.Add(mapping.Map<Models.Policy>(entity));
-            return mapping.Map<Policy>(policy);
+            var newPolicy = mapping.Map<Models.Policy>(entity);
+            newPolicy.RiskType = null;
+            newPolicy.PolicyClients = null;
+            newPolicy.RiskTypeId = entity.RiskType.RiskTypeId;
+            newPolicy = _context.Policies.Add(mapping.Map<Models.Policy>(newPolicy));
+            return mapping.Map<Policy>(newPolicy);
         }
 
         public Policy Delete(Policy entity)
@@ -53,7 +67,19 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             {
                 policies = _context.Policies.ToList();
             }
-
+            else
+            {
+                var query = (from policy in _context.Policies select policy);
+                if (entity.PolicyId > 0)
+                {
+                    query = query.Where(c => c.PolicyId == entity.PolicyId);
+                }
+                if (!string.IsNullOrEmpty(entity.Name))
+                {
+                    query = query.Where(c => c.Name == entity.Name);
+                }
+                policies = query.ToList();
+            }
             return mapping.Map<IEnumerable<Policy>>(policies);
         }
 
@@ -65,7 +91,12 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             policy.StartDate = entity.StartDate;
             policy.CoverageTime = entity.CoverageTime;
             policy.Price = entity.Price;
-            policy.RiskType = mapping.Map<Models.RiskType>(entity.RiskType);
-        }        
+            policy.RiskTypeId = entity.RiskTypeId;
+        }
+
+        public void Create(IEnumerable<Policy> entity)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

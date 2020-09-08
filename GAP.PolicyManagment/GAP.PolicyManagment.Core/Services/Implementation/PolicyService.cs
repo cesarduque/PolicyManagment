@@ -3,21 +3,51 @@ using GAP.PolicyManagment.Core.Repositories;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GAP.PolicyManagment.Core.Services.Implementation
 {
     public class PolicyService : IPolicyService
     {
-        private readonly IPolicyRepository _policyRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPolicyCoverageTypeService _policyCoverageTypeService;
 
-        public PolicyService(IPolicyRepository policyRepository)
+        public PolicyService(IUnitOfWork unitOfWork, IPolicyCoverageTypeService policyCoverageTypeService)
         {
-            _policyRepository = policyRepository;
+            _unitOfWork = unitOfWork;
+            _policyCoverageTypeService = policyCoverageTypeService;
+        }
+
+        public PolicyService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;            
         }
 
         public Policy Create(Policy entity)
         {
-            throw new NotImplementedException();
+            var policySerach = new Policy { Name = entity.Name };
+            if (Get(policySerach).Any())
+            {
+                throw new Exception("The policy is already created");
+            }
+
+            var c = entity.PolicyCoverageTypes;
+            entity.PolicyCoverageTypes = null;
+
+            _unitOfWork.Policy.Create(entity);
+            _unitOfWork.Confirm();
+
+            var policyCreated = Get(entity).FirstOrDefault();
+
+            var result = c.Select(ent =>
+            {
+                ent.Policy = policyCreated;
+                return ent;
+            });
+
+            _policyCoverageTypeService.Create(result);
+
+            return policyCreated;
         }
 
         public void Create(IEnumerable<Policy> entity)
@@ -25,9 +55,11 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public Policy Delete(Policy entidad)
+        public Policy Delete(Policy entity)
         {
-            throw new NotImplementedException();
+            _unitOfWork.Policy.Delete(entity);
+            _unitOfWork.Confirm();
+            return entity;
         }
 
         public Policy Get(object code)
@@ -37,12 +69,20 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 
         public IEnumerable<Policy> Get(Policy entity)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.Policy.Get(entity);
         }
 
-        public Policy Update(Policy entity)
+        public void Update(Policy entity)
         {
-            throw new NotImplementedException();
+            _unitOfWork.Policy.Update(entity);            
+
+            foreach (var item in entity.PolicyCoverageTypes)
+            {
+                _policyCoverageTypeService.Update(item);                
+            }
+           
+            _unitOfWork.Confirm();
+         
         }
     }
 }

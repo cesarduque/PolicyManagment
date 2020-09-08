@@ -58,10 +58,23 @@
     <Compile Include="Migrations\202009062154213_DatabaseCreation1.designer.cs">
       <DependentUpon>202009062154213_DatabaseCreation1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009071750358_ModifyingRiskType.cs" />
+    <Compile Include="Migrations\202009071750358_ModifyingRiskType.designer.cs">
+      <DependentUpon>202009071750358_ModifyingRiskType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009071845458_CoverageType.cs" />
+    <Compile Include="Migrations\202009071845458_CoverageType.designer.cs">
+      <DependentUpon>202009071845458_CoverageType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009080447224_AddingPolicyClient.cs" />
+    <Compile Include="Migrations\202009080447224_AddingPolicyClient.designer.cs">
+      <DependentUpon>202009080447224_AddingPolicyClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\CoverageType.cs" />
     <Compile Include="Models\Policy.cs" />
+    <Compile Include="Models\PolicyClient.cs" />
     <Compile Include="Models\PolicyCoverageType.cs" />
     <Compile Include="Models\RiskType.cs" />
     <Compile Include="PolicyManagmentContext.cs" />
@@ -69,6 +82,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\ClientRepository.cs" />
     <Compile Include="Repositories\CoverageTypeRepository.cs" />
+    <Compile Include="Repositories\PolicyClientRepository.cs" />
     <Compile Include="Repositories\PolicyCoverageTypeRepository.cs" />
     <Compile Include="Repositories\PolicyRepository.cs" />
     <Compile Include="Repositories\RiskTypeRepository.cs" />
@@ -87,6 +101,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009062154213_DatabaseCreation1.resx">
       <DependentUpon>202009062154213_DatabaseCreation1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071750358_ModifyingRiskType.resx">
+      <DependentUpon>202009071750358_ModifyingRiskType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009071845458_CoverageType.resx">
+      <DependentUpon>202009071845458_CoverageType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009080447224_AddingPolicyClient.resx">
+      <DependentUpon>202009080447224_AddingPolicyClient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

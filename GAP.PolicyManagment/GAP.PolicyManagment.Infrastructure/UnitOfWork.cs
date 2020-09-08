@@ -18,11 +18,15 @@ namespace GAP.PolicyManagment.Infrastructure
         private ICoverageTypeRepository _coverageTypeRepository;
         private IPolicyRepository _policyRepository;
         private IRiskTypeRepository _riskTypeRepository;
+        private IPolicyCoverageTypeRepository _policyCoverageTypeRepository;
+        private IPolicyClientRepository _policyClientRepository;
 
         public IClientRepository Client => _clientRepository ?? (_clientRepository = new ClientRepository(_context));
         public ICoverageTypeRepository CoverageType => _coverageTypeRepository ?? (_coverageTypeRepository = new CoverageTypeRepository(_context));
         public IPolicyRepository Policy => _policyRepository ?? (_policyRepository = new PolicyRepository(_context));
         public IRiskTypeRepository RiskType => _riskTypeRepository ?? (_riskTypeRepository = new RiskTypeRepository(_context));
+        public IPolicyCoverageTypeRepository PolicyCoverageType => _policyCoverageTypeRepository ?? (_policyCoverageTypeRepository = new PolicyCoverageTypeRepository(_context));
+        public IPolicyClientRepository PolicyClient => _policyClientRepository ?? (_policyClientRepository = new PolicyClientRepository(_context));
 
         public int Confirm()
         {

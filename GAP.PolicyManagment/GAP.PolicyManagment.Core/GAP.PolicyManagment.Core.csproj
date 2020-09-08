@@ -44,6 +44,7 @@
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\CoverageType.cs" />
     <Compile Include="Entities\Policy.cs" />
+    <Compile Include="Entities\PolicyClient.cs" />
     <Compile Include="Entities\PolicyCoverageType.cs" />
     <Compile Include="Entities\RiskType.cs" />
     <Compile Include="IUnitOfWork.cs" />
@@ -54,11 +55,13 @@
     <Compile Include="Repositories\BaseRepository\IUpdatableBaseRepository.cs" />
     <Compile Include="Repositories\IClientRepository.cs" />
     <Compile Include="Repositories\ICoverageTypeRepository.cs" />
+    <Compile Include="Repositories\IPolicyClientRepository.cs" />
     <Compile Include="Repositories\IPolicyCoverageTypeRepository.cs" />
     <Compile Include="Repositories\IPolicyRepository.cs" />
     <Compile Include="Repositories\IRiskTypeRepository.cs" />
     <Compile Include="Services\Implementation\ClientService.cs" />
     <Compile Include="Services\Implementation\CoverageTypeService.cs" />
+    <Compile Include="Services\Implementation\PolicyClientService.cs" />
     <Compile Include="Services\Implementation\PolicyService.cs" />
     <Compile Include="Services\Implementation\RiskTypeService.cs" />
     <Compile Include="Services\Interface\BaseService\ICreatableBaseService.cs" />
@@ -67,8 +70,11 @@
     <Compile Include="Services\Interface\BaseService\IUpdatableBaseService.cs" />
     <Compile Include="Services\Interface\IClientService.cs" />
     <Compile Include="Services\Interface\ICoverageTypeService.cs" />
+    <Compile Include="Services\Interface\IPolicyClientService.cs" />
+    <Compile Include="Services\Interface\IPolicyCoverageTypeService.cs" />
     <Compile Include="Services\Interface\IPolicyService.cs" />
     <Compile Include="Services\Interface\IRiskTypeService.cs" />
+    <Compile Include="Services\Implementation\PolicyCoverageTypeService.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

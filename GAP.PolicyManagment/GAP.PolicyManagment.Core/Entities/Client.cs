@@ -8,6 +8,6 @@ namespace GAP.PolicyManagment.Core.Entities
 
         public string Name { get; set; }
 
-        public ICollection<Policy> Policies { get; set; }
+        public virtual ICollection<PolicyClient> PolicyClients { get; set; }
     }
 }

@@ -1,10 +1,5 @@
-﻿using GAP.PolicyManagment.Core.Entities;
-using GAP.PolicyManagment.Core.Services.Interface;
+﻿using GAP.PolicyManagment.Core.Services.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 
@@ -18,27 +13,16 @@ namespace GAP.PolicyManagment.WebApi.Controllers
         {
             _riskTypeService = riskTypeService;
         }
-
-        [HttpGet]
-        public ActionResult<RiskType> Get([FromQuery] RiskType riskTypeService)
+        
+        public IHttpActionResult Get()
         {
             try
-            {
-                var empresas = _empresaServicio.Recuperar(empresa);
-                if (empresas.Any())
-                {
-                    return new RespuestaServicio<IEnumerable<Empresa>>(HttpStatusCode.OK, empresas, string.Empty);
-                }
-
-                return new RespuestaServicio<Empresa>(HttpStatusCode.NoContent, null, Mensajes.NO_HAY_REGISTROS);
-            }
-            catch (NegocioExcepcion e)
-            {
-                return new RespuestaServicio<Empresa>(HttpStatusCode.BadRequest, null, e.Message);
-            }
+            {                
+                return Ok (_riskTypeService.Get(null));                
+            }           
             catch (Exception e)
             {
-                return new RespuestaServicio<Empresa>(HttpStatusCode.InternalServerError, null, e.Message);
+                return InternalServerError(e);
             }
         }
     }

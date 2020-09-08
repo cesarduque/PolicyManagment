@@ -5,11 +5,6 @@ namespace GAP.PolicyManagment.Infrastructure.Models
 {
     public class Policy
     {
-        public Policy()
-        {
-            this.Clients = new HashSet<Client>();            
-        }
-
         public int PolicyId { get; set; }
 
         public string Name { get; set; }
@@ -22,8 +17,12 @@ namespace GAP.PolicyManagment.Infrastructure.Models
 
         public double Price { get; set; }
 
+        public int RiskTypeId { get; set; }
+
         public RiskType RiskType { get; set; }
 
-        public virtual ICollection<Client> Clients { get; set; }        
+        public virtual ICollection<PolicyClient> PolicyClients { get; set; }
+
+        public virtual ICollection<PolicyCoverageType> PolicyCoverageTypes { get; set; }
     }
 }

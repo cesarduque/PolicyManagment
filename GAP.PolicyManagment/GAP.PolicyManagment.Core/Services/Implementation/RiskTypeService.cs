@@ -11,12 +11,13 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 {
     public class RiskTypeService : IRiskTypeService
     {
-        private readonly IRiskTypeRepository _riskTypeRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RiskTypeService(IRiskTypeRepository riskTypeRepository)
+        public RiskTypeService(IUnitOfWork unitOfWork)
         {
-            _riskTypeRepository = riskTypeRepository;
+            _unitOfWork = unitOfWork;
         }
+
         public RiskType Get(object code)
         {
             throw new NotImplementedException();
@@ -24,7 +25,7 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
 
         public IEnumerable<RiskType> Get(RiskType entity)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.RiskType.Get(entity);
         }
     }
 }

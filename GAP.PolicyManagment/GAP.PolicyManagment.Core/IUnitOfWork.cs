@@ -8,6 +8,8 @@ namespace GAP.PolicyManagment.Core
         ICoverageTypeRepository CoverageType { get; }
         IPolicyRepository Policy { get; }
         IRiskTypeRepository RiskType { get; }
+        IPolicyCoverageTypeRepository PolicyCoverageType { get; }
+        IPolicyClientRepository PolicyClient { get; }
 
         int Confirm();
     }

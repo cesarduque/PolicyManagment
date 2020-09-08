@@ -68,6 +68,21 @@ namespace GAP.PolicyManagment.WebApi
                 container.RegisterType<IUnitOfWork, UnitOfWork>(hierarchicalLifetimeManager);
             }
 
+            using (var hierarchicalLifetimeManager = new HierarchicalLifetimeManager())
+            {
+                container.RegisterType<IPolicyCoverageTypeService, PolicyCoverageTypeService>(hierarchicalLifetimeManager);
+            }
+
+            using (var hierarchicalLifetimeManager = new HierarchicalLifetimeManager())
+            {
+                container.RegisterType<IPolicyClientService, PolicyClientService>(hierarchicalLifetimeManager);
+            }
+
+            using (var hierarchicalLifetimeManager = new HierarchicalLifetimeManager())
+            {
+                container.RegisterType<IPolicyClientRepository, PolicyClientRepository>(hierarchicalLifetimeManager);
+            }
+
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
@@ -86,6 +101,9 @@ namespace GAP.PolicyManagment.WebApi
 
             config.Formatters.JsonFormatter.SerializerSettings.Formatting
                 = Newtonsoft.Json.Formatting.Indented;
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }

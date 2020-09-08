@@ -1,10 +1,7 @@
 ﻿namespace GAP.PolicyManagment.Infrastructure.Migrations
 {
     using GAP.PolicyManagment.Infrastructure.Models;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<GAP.PolicyManagment.Infrastructure.PolicyManagmentContext>
     {
@@ -15,14 +12,14 @@
 
         protected override void Seed(PolicyManagmentContext context)
         {
-            context.CoverageTypes.AddOrUpdate(
-                new CoverageType() { Name = "Terremoto" },
-                new CoverageType() { Name = "Incendio" },
-                new CoverageType() { Name = "Robo" },
-                new CoverageType() { Name = "Pérdida" }
+            context.CoverageTypes.AddOrUpdate( x => x.Name,                
+                new Models.CoverageType() { Name = "Terremoto" },
+                new Models.CoverageType() { Name = "Incendio" },
+                new Models.CoverageType() { Name = "Robo" },
+                new Models.CoverageType() { Name = "Pérdida" }
                 );
 
-            context.RiskTypes.AddOrUpdate(
+            context.RiskTypes.AddOrUpdate(x => x.Name,
                new RiskType() { Name = "Bajo" },
                new RiskType() { Name = "Medio" },
                new RiskType() { Name = "Medio-Alto" },

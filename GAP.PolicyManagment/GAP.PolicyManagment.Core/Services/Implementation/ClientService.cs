@@ -3,21 +3,46 @@ using GAP.PolicyManagment.Core.Repositories;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GAP.PolicyManagment.Core.Services.Implementation
 {
     public class ClientService : IClientService
     {
-        private readonly IClientRepository _clientRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPolicyClientService _policyClientService;
 
-        public ClientService(IClientRepository clientRepository)
+        public ClientService(IUnitOfWork unitOfWork, IPolicyClientService policyClientService)
         {
-            _clientRepository = clientRepository;
+            _unitOfWork = unitOfWork;
+            _policyClientService = policyClientService;
         }
 
         public Client Create(Client entity)
         {
-            throw new NotImplementedException();
+            var clientSerach = new Client { Name = entity.Name };
+            if (Get(clientSerach).Any())
+            {
+                throw new Exception("The Client is already created");
+            }
+
+            var c = entity.PolicyClients;
+            entity.PolicyClients = null;
+
+            _unitOfWork.Client.Create(entity);
+            _unitOfWork.Confirm();
+
+            var clientCreated = Get(entity).FirstOrDefault();
+
+            var result = c.Select(ent =>
+            {
+                ent.Client = clientCreated;
+                return ent;
+            });
+
+            _policyClientService.Create(result);
+
+            return clientSerach;
         }
 
         public void Create(IEnumerable<Client> entity)
@@ -25,24 +50,33 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public Client Delete(Client entidad)
+        public Client Delete(Client entity)
         {
-            throw new NotImplementedException();
+            _unitOfWork.Client.Delete(entity);
+            _unitOfWork.Confirm();
+            return entity;
         }
 
         public Client Get(object code)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.Client.Get(code);
         }
 
         public IEnumerable<Client> Get(Client entity)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.Client.Get(entity);
         }
 
-        public Client Update(Client entity)
+        public void Update(Client entity)
         {
-            throw new NotImplementedException();
+            _unitOfWork.Client.Update(entity);
+
+            foreach (var item in entity.PolicyClients)
+            {
+                _policyClientService.Update(item);
+            }
+
+            _unitOfWork.Confirm();
         }
     }
 }

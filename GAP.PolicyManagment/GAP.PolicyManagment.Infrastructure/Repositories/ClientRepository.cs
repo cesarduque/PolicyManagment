@@ -21,13 +21,25 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             {
                 cfg.CreateMap<Client, Models.Client>()
                     .ReverseMap();
+                cfg.CreateMap<Policy, Models.Policy>()
+                    .ReverseMap();
+                cfg.CreateMap<CoverageType, Models.CoverageType>()
+                   .ReverseMap();
+                cfg.CreateMap<RiskType, Models.RiskType>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyCoverageType, Models.PolicyCoverageType>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyClient, Models.PolicyClient>()
+                    .ReverseMap();
             });
             mapping = config.CreateMapper();
         }
 
         public Client Create(Client entity)
         {
-            var client = _context.Clients.Add(mapping.Map<Models.Client>(entity));
+            var client = mapping.Map<Models.Client>(entity);
+            client.PolicyClients = null;            
+            client = _context.Clients.Add(mapping.Map<Models.Client>(client));
             return mapping.Map<Client>(client);
         }
 
@@ -52,6 +64,19 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             {
                 clients = _context.Clients.ToList();
             }
+            else
+            {
+                var query = (from client in _context.Clients select client);
+                if (entity.ClientId > 0)
+                {
+                    query = query.Where(c => c.ClientId == entity.ClientId);
+                }
+                if (!string.IsNullOrEmpty(entity.Name))
+                {
+                    query = query.Where(c => c.Name == entity.Name);
+                }
+                clients = query.ToList();
+            }
 
             return mapping.Map<IEnumerable<Client>>(clients);
         }
@@ -60,6 +85,11 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
         {
             var policy = _context.Policies.Find(entity.ClientId);
             policy.Name = entity.Name;           
-        }        
+        }
+
+        public void Create(IEnumerable<Client> entity)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
