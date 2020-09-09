@@ -33,40 +33,23 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             mapping = config.CreateMapper();
         }
 
-        public PolicyCoverageType Create(PolicyCoverageType entity)
+        public void Create(PolicyCoverageType entity)
         {
-            var policyCoverageType = _context.PolicyCoverageTypes.Add(mapping.Map<Models.PolicyCoverageType>(entity));
-            return mapping.Map<PolicyCoverageType>(policyCoverageType);
-        }
+            var newPolicyCoverageType = new PolicyCoverageType { 
+                CoverageType = null,
+                Policy = null,
+                CoveragePercentage = entity.CoveragePercentage,
+                PolicyId = entity.PolicyId,
+                CoverageTypeId = entity.CoverageTypeId
+            };
+            _context.PolicyCoverageTypes.Add(mapping.Map<Models.PolicyCoverageType>(newPolicyCoverageType));            
+        }        
 
-        public void Create(IEnumerable<PolicyCoverageType> entities)
-        {
-            var result = mapping.Map<IEnumerable<Models.PolicyCoverageType>>(entities);
-
-            var test = result.Select(ent =>
-            {
-                ent.CoverageTypeId = ent.CoverageType.CoverageTypeId;
-                ent.CoverageType = null;
-                ent.PolicyId = ent.Policy.PolicyId;
-                ent.Policy = null;                
-                return ent;
-            });
-
-            _context.PolicyCoverageTypes.AddRange(test);
-        }
-
-        public PolicyCoverageType Delete(PolicyCoverageType entity)
+        public void Delete(PolicyCoverageType entity)
         {
             var policyCoverageType = _context.PolicyCoverageTypes.Find(entity.PolicyCoverageTypeId);
-            _context.PolicyCoverageTypes.Remove(policyCoverageType);
-            return mapping.Map<PolicyCoverageType>(policyCoverageType);
-        }
-
-        public PolicyCoverageType Get(object code)
-        {
-            var policyCoverageType = _context.PolicyCoverageTypes.Find(code);
-            return mapping.Map<PolicyCoverageType>(policyCoverageType);
-        }
+            _context.PolicyCoverageTypes.Remove(policyCoverageType);            
+        }        
 
         public IEnumerable<PolicyCoverageType> Get(PolicyCoverageType entity)
         {

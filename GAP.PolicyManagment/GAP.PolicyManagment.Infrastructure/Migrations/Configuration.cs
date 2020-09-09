@@ -12,6 +12,13 @@
 
         protected override void Seed(PolicyManagmentContext context)
         {
+            context.Clients.AddOrUpdate(x => x.Name,
+               new Client() { Name = "Tim" },
+               new Client() { Name = "Stive" },
+               new Client() { Name = "Bob" },
+               new Client() { Name = "Avi" }
+               );
+
             context.CoverageTypes.AddOrUpdate( x => x.Name,                
                 new Models.CoverageType() { Name = "Terremoto" },
                 new Models.CoverageType() { Name = "Incendio" },

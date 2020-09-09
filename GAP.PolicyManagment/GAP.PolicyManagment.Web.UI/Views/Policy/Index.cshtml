@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GAP.PolicyManagment.Web.UI.Models.Policy>
+
+@{
+    ViewBag.Title = "Policies";
+}
+
+<h2>Policies</h2>
+
+<p>
+    @Html.ActionLink("Create New Policy", "Create")
+</p>
+
+@if (true)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoverageTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiskTypeId)
+            </th>
+            <th></th>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoverageTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiskTypeId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PolicyId }) |
+                    @Html.ActionLink("Details", "Details", "PolicyCoverageType", new { id = item.PolicyId }, null) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PolicyId })
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <label> There are not records</label>
+}

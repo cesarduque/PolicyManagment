@@ -1,10 +1,6 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace GAP.PolicyManagment.WebApi.Controllers
@@ -18,55 +14,17 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             _clientService = clientService;
         }
 
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int id)
         {
             try
             {
-                var clients = _clientService.Get(null);
-                if (clients.Any())
+                if (id > 0)
                 {
-                    return Ok(clients);
+                    return Ok(_clientService.Get(new Client { ClientId = id }));
                 }
-
-                return NotFound();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-
-        public IHttpActionResult Post([FromBody]Client client)
-        {
-            try
-            {
-                return Ok(_clientService.Create(client));
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-
-        
-        public IHttpActionResult Put([FromBody]Client client)
-        {
-            try
-            {
-                _clientService.Update(client);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-        
-        public IHttpActionResult Delete([FromBody]Client client)
-        {
-            try
-            {
-                return Ok(_clientService.Delete(client));
+                else {
+                    return Ok(_clientService.Get(null));
+                }
             }
             catch (Exception e)
             {

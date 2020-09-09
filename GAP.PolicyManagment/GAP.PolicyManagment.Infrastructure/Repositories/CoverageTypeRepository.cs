@@ -21,16 +21,20 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CoverageType, Models.CoverageType>()
+                    .ReverseMap();                
+                cfg.CreateMap<Client, Models.Client>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyCoverageType, Models.PolicyCoverageType>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyClient, Models.PolicyClient>()
+                    .ReverseMap();
+                cfg.CreateMap<RiskType, Models.RiskType>()
+                    .ReverseMap();
+                cfg.CreateMap<Policy, Models.Policy>()
                     .ReverseMap();
             });
             mapping = config.CreateMapper();
-        }
-
-        public CoverageType Get(object code)
-        {
-            var coverageType = _context.CoverageTypes.Find(code);
-            return mapping.Map<CoverageType>(coverageType);
-        }
+        }       
 
         public IEnumerable<CoverageType> Get(CoverageType entity)
         {

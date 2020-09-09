@@ -3,10 +3,7 @@ using GAP.PolicyManagment.Core.Repositories.BaseRepository;
 
 namespace GAP.PolicyManagment.Core.Repositories
 {
-    public interface IClientRepository : ICreatableRepository<Client>,
-        IRecoverableRepository<Client>,
-        IDeletableRepository<Client>,
-        IUpdatableRepository<Client>
+    public interface IClientRepository : IRecoverableRepository<Client>        
     {
     }
 }

@@ -36,40 +36,21 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             mapping = config.CreateMapper();
         }
 
-        public PolicyClient Create(PolicyClient entity)
+        public void Create(PolicyClient entity)
         {
-            var policyClient = _context.PolicyClients.Add(mapping.Map<Models.PolicyClient>(entity));
-            return mapping.Map<PolicyClient>(policyClient);
-        }
+            var newPolicyClient = mapping.Map<Models.PolicyClient>(entity);
+            newPolicyClient.Client = null;
+            newPolicyClient.Policy = null;
+            newPolicyClient.PolicyId = entity.PolicyId;
+            newPolicyClient.ClientId = entity.ClientId;
+            _context.PolicyClients.Add(mapping.Map<Models.PolicyClient>(newPolicyClient));            
+        }       
 
-        public void Create(IEnumerable<PolicyClient> entities)
+        public void Delete(PolicyClient entity)
         {
-            var result = mapping.Map<IEnumerable<Models.PolicyClient>>(entities);
-
-            var test = result.Select(ent =>
-            {
-                ent.ClientId = ent.Client.ClientId;
-                ent.Client = null;
-                ent.PolicyId = ent.Policy.PolicyId;
-                ent.Policy = null;
-                return ent;
-            });
-
-            _context.PolicyClients.AddRange(test);
-        }
-
-        public PolicyClient Delete(PolicyClient entity)
-        {
-            var policyClient = _context.PolicyClients.Find(entity.ClientId);
-            _context.PolicyClients.Remove(policyClient);
-            return mapping.Map<PolicyClient>(policyClient);
-        }
-
-        public PolicyClient Get(object code)
-        {
-            var policyClient = _context.PolicyClients.Find(code);
-            return mapping.Map<PolicyClient>(policyClient);
-        }
+            var policyClient = _context.PolicyClients.Find(entity.PolicyClientId);
+            _context.PolicyClients.Remove(policyClient);            
+        }        
 
         public IEnumerable<PolicyClient> Get(PolicyClient entity)
         {
@@ -100,8 +81,12 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
         }
 
         public void Update(PolicyClient entity)
-        {
-            var policyCoverageType = _context.PolicyClients.Find(entity.ClientId);           
+        {            
+            var updatePolicyClient = mapping.Map<Models.PolicyClient>(entity.PolicyClientId);
+            updatePolicyClient.Client = null;
+            updatePolicyClient.Policy = null;
+            updatePolicyClient.PolicyId = entity.PolicyId;
+            updatePolicyClient.ClientId = entity.ClientId;
         }
     }
 }

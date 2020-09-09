@@ -22,6 +22,16 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             {
                 cfg.CreateMap<RiskType, Models.RiskType>()
                     .ReverseMap();
+                cfg.CreateMap<Policy, Models.Policy>()
+                    .ReverseMap();
+                cfg.CreateMap<CoverageType, Models.CoverageType>()
+                    .ReverseMap();
+                cfg.CreateMap<Client, Models.Client>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyCoverageType, Models.PolicyCoverageType>()
+                    .ReverseMap();
+                cfg.CreateMap<PolicyClient, Models.PolicyClient>()
+                    .ReverseMap();
             });
             mapping = config.CreateMapper();
         }

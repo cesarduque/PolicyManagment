@@ -1,0 +1,28 @@
+﻿@model IEnumerable<GAP.PolicyManagment.Web.UI.Models.Client>
+
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>Customers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>            
+            @Html.ActionLink("Details", "Details", "PolicyClient", new { id = item.ClientId }, null)
+        </td>
+    </tr>
+}
+
+</table>

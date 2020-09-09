@@ -2,6 +2,6 @@
 {
     public interface IDeletableRepository<TEntity> where TEntity : class
     {
-        TEntity Delete(TEntity entity);
+        void Delete(TEntity entity);
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IDeletableBaseService<TEntity> where TEntity : class
     {
-        TEntity Delete(TEntity entidad);
+        void Delete(TEntity entidad);
     }    
 }

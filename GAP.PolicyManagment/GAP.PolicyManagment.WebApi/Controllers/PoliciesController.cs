@@ -1,7 +1,6 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
-using System.Linq;
 using System.Web.Http;
 
 namespace GAP.PolicyManagment.WebApi.Controllers
@@ -15,17 +14,18 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             _policyService = policyService;
         }        
 
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int id)
         {
             try
             {
-                var policies = _policyService.Get(null);
-                if (policies.Any())
+                if (id > 0)
                 {
-                    return Ok(policies);
+                    return Ok(_policyService.Get(new Policy { PolicyId = id }));
                 }
-
-                return NotFound();
+                else
+                {
+                    return Ok(_policyService.Get(null));
+                }                
             }           
             catch (Exception e)
             {
@@ -37,7 +37,8 @@ namespace GAP.PolicyManagment.WebApi.Controllers
         {
             try
             {
-                return Ok(_policyService.Create(policy));
+                _policyService.Create(policy);
+                return Ok();
             }
             catch (Exception e)
             {
@@ -58,11 +59,12 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
-        public IHttpActionResult Delete([FromBody]Policy policy)
+        public IHttpActionResult Delete(int id)
         {
             try
             {
-                return Ok(_policyService.Delete(policy));
+                _policyService.Delete(new Policy { PolicyId = id });
+                return Ok();
             }
             catch (Exception e)
             {

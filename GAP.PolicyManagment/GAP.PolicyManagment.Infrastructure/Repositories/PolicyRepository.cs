@@ -3,6 +3,7 @@ using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace GAP.PolicyManagment.Infrastructure.Repositories
 {
@@ -36,28 +37,20 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             mapping = config.CreateMapper();
         }
 
-        public Policy Create(Policy entity)
+        public void Create(Policy entity)
         {
             var newPolicy = mapping.Map<Models.Policy>(entity);
             newPolicy.RiskType = null;
             newPolicy.PolicyClients = null;
-            newPolicy.RiskTypeId = entity.RiskType.RiskTypeId;
-            newPolicy = _context.Policies.Add(mapping.Map<Models.Policy>(newPolicy));
-            return mapping.Map<Policy>(newPolicy);
+            newPolicy.RiskTypeId = entity.RiskTypeId;
+            newPolicy = _context.Policies.Add(mapping.Map<Models.Policy>(newPolicy));            
         }
 
-        public Policy Delete(Policy entity)
+        public void Delete(Policy entity)
         {
             var policy = _context.Policies.Find(entity.PolicyId);
-            _context.Policies.Remove(policy);
-            return mapping.Map<Policy>(policy);
-        }
-
-        public Policy Get(object code)
-        {
-            var policy = _context.Policies.Find(code);
-            return mapping.Map<Policy>(policy);
-        }
+            _context.Policies.Remove(policy);            
+        }       
 
         public IEnumerable<Policy> Get(Policy entity)
         {
@@ -69,7 +62,7 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             }
             else
             {
-                var query = (from policy in _context.Policies select policy);
+                var query = (from policy in _context.Policies.Include(p => p.PolicyCoverageTypes) select policy);
                 if (entity.PolicyId > 0)
                 {
                     query = query.Where(c => c.PolicyId == entity.PolicyId);
@@ -92,11 +85,6 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             policy.CoverageTime = entity.CoverageTime;
             policy.Price = entity.Price;
             policy.RiskTypeId = entity.RiskTypeId;
-        }
-
-        public void Create(IEnumerable<Policy> entity)
-        {
-            throw new System.NotImplementedException();
-        }
+        }        
     }
 }

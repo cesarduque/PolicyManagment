@@ -3,8 +3,6 @@ using GAP.PolicyManagment.Core.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GAP.PolicyManagment.Core.Services.Implementation
 {
@@ -17,35 +15,27 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public PolicyCoverageType Create(PolicyCoverageType entity)
+        public void Create(PolicyCoverageType entity)
         {
-            throw new NotImplementedException();
+            _unitOfWork.PolicyCoverageType.Create(entity);
+            _unitOfWork.Confirm();           
         }
-
-        public void Create(IEnumerable<PolicyCoverageType> entities)
+      
+        public void Delete(PolicyCoverageType entity)
         {
-            _unitOfWork.PolicyCoverageType.Create(entities);
+            _unitOfWork.PolicyCoverageType.Delete(entity);
             _unitOfWork.Confirm();
-        }
-
-        public PolicyCoverageType Delete(PolicyCoverageType entidad)
-        {
-            throw new NotImplementedException();
-        }
-
-        public PolicyCoverageType Get(object code)
-        {
-            throw new NotImplementedException();
-        }
+        }       
 
         public IEnumerable<PolicyCoverageType> Get(PolicyCoverageType entity)
-        {
-            throw new NotImplementedException();
+        {            
+            return _unitOfWork.PolicyCoverageType.Get(entity);
         }
 
         public void Update(PolicyCoverageType entity)
         {
             _unitOfWork.PolicyCoverageType.Update(entity);
+            _unitOfWork.Confirm();
         }
     }
 }

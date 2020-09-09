@@ -70,6 +70,10 @@
     <Compile Include="Migrations\202009080447224_AddingPolicyClient.designer.cs">
       <DependentUpon>202009080447224_AddingPolicyClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009091222170_AddingClientSeed.cs" />
+    <Compile Include="Migrations\202009091222170_AddingClientSeed.designer.cs">
+      <DependentUpon>202009091222170_AddingClientSeed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\CoverageType.cs" />
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009080447224_AddingPolicyClient.resx">
       <DependentUpon>202009080447224_AddingPolicyClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009091222170_AddingClientSeed.resx">
+      <DependentUpon>202009091222170_AddingClientSeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

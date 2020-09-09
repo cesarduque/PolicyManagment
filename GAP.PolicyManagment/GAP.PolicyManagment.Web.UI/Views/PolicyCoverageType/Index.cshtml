@@ -1,0 +1,44 @@
+﻿@model IEnumerable<GAP.PolicyManagment.Web.UI.Models.PolicyCoverageType>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PolicyId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoverageTypeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoveragePercentage)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PolicyId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoverageTypeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoveragePercentage)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PolicyCoverageTypeId }) |            
+            @Html.ActionLink("Delete", "Delete", new { id=item.PolicyCoverageTypeId })
+        </td>
+    </tr>
+}
+
+</table>

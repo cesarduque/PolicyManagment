@@ -1,10 +1,6 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Services.Interface;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GAP.PolicyManagment.Core.Services.Implementation
 {
@@ -17,35 +13,27 @@ namespace GAP.PolicyManagment.Core.Services.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public PolicyClient Create(PolicyClient entity)
+        public void Create(PolicyClient entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Create(IEnumerable<PolicyClient> entities)
-        {
-            _unitOfWork.PolicyClient.Create(entities);
+            _unitOfWork.PolicyClient.Create(entity);
             _unitOfWork.Confirm();
-        }
+        }        
 
-        public PolicyClient Delete(PolicyClient entidad)
+        public void Delete(PolicyClient entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public PolicyClient Get(object code)
-        {
-            throw new NotImplementedException();
-        }
+            _unitOfWork.PolicyClient.Delete(entity);
+            _unitOfWork.Confirm();            
+        }       
 
         public IEnumerable<PolicyClient> Get(PolicyClient entity)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.PolicyClient.Get(entity);
         }
 
         public void Update(PolicyClient entity)
         {
             _unitOfWork.PolicyClient.Update(entity);
+            _unitOfWork.Confirm();
         }
     }
 }
