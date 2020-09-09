@@ -1,23 +1,31 @@
 ﻿using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Services.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace GAP.PolicyManagment.WebApi.Controllers
 {
+    /// <summary>
+    /// Implement operations realated to policies clients
+    /// </summary>
     public class PolicyClientsController : ApiController
     {
         private readonly IPolicyClientService _policyClientService;
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="policyClientService"></param>
         public PolicyClientsController(IPolicyClientService policyClientService)
         {
             _policyClientService = policyClientService;
         }
 
+        /// <summary>
+        /// Get policies clients 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             try
@@ -37,6 +45,11 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Create policies clients 
+        /// </summary>
+        /// <param name="policyClient"></param>
+        /// <returns></returns>
         public IHttpActionResult Post([FromBody]PolicyClient policyClient)
         {
             try
@@ -50,6 +63,11 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Update policies clients 
+        /// </summary>
+        /// <param name="policyClient"></param>
+        /// <returns></returns>
         public IHttpActionResult Put([FromBody] PolicyClient policyClient)
         {
             try
@@ -63,6 +81,11 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete policies clients 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Delete(int id)
         {
             try

@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Linq;
 
 namespace GAP.PolicyManagment.Infrastructure.Repositories
 {

@@ -2,8 +2,8 @@
 using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 
 namespace GAP.PolicyManagment.Infrastructure.Repositories
 {

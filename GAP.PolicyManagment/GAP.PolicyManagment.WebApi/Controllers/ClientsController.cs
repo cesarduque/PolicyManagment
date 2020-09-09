@@ -5,15 +5,27 @@ using System.Web.Http;
 
 namespace GAP.PolicyManagment.WebApi.Controllers
 {
+    /// <summary>
+    /// Implement operations realated to clients
+    /// </summary>
     public class ClientsController : ApiController
     {
         private readonly IClientService _clientService;
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="clientService"></param>
         public ClientsController(IClientService clientService)
         {
             _clientService = clientService;
         }
 
+        /// <summary>
+        /// Get cllient by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             try

@@ -5,15 +5,27 @@ using System.Web.Http;
 
 namespace GAP.PolicyManagment.WebApi.Controllers
 {
+    /// <summary>
+    /// Implement operations realated to policies
+    /// </summary>
     public class PoliciesController : ApiController
     {
-        private readonly IPolicyService _policyService;        
+        private readonly IPolicyService _policyService;
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="policyService"></param>
         public PoliciesController(IPolicyService policyService)
         {
             _policyService = policyService;
-        }        
+        }
 
+        /// <summary>
+        /// Get Policies 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Get(int id)
         {
             try
@@ -33,6 +45,11 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Create Policies 
+        /// </summary>
+        /// <param name="policy"></param>
+        /// <returns></returns>
         public IHttpActionResult Post([FromBody]Policy policy)
         {
             try
@@ -46,6 +63,11 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Update Policies 
+        /// </summary>
+        /// <param name="policy"></param>
+        /// <returns></returns>
         public IHttpActionResult Put([FromBody] Policy policy)
         {
             try
@@ -59,6 +81,11 @@ namespace GAP.PolicyManagment.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete Policies 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IHttpActionResult Delete(int id)
         {
             try

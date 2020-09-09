@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GAP.PolicyManagment.Infrastructure.Models
+﻿namespace GAP.PolicyManagment.Infrastructure.Models
 {
     public class PolicyClient
     {
