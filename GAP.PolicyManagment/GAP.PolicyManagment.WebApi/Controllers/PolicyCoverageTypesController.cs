@@ -25,8 +25,7 @@ namespace GAP.PolicyManagment.WebApi.Controllers
                 else
                 {
                     return Ok(_policyCoverageTypeService.Get(null));
-                }
-                
+                }                
             }
             catch (Exception e)
             {

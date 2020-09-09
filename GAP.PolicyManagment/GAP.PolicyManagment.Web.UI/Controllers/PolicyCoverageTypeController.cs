@@ -25,7 +25,7 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                TempData["PolicyId"] = id;
+                Session["PolicyId"] = id;
                 HttpResponseMessage response = await httpClient.GetAsync($"{ConfigurationManager.AppSettings["BaseUrlApi"]}Policies/{id}");
 
                 if (response.IsSuccessStatusCode)
@@ -33,6 +33,15 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                     var json = await response.Content.ReadAsStringAsync();
                     var policyCoverageType = JsonConvert.DeserializeObject<ICollection<Policy>>(json).FirstOrDefault();
                     ViewBag.Records = true;
+
+                    foreach (var item in policyCoverageType.PolicyCoverageTypes)
+                    {
+                        response = await httpClient.GetAsync($"{ConfigurationManager.AppSettings["BaseUrlApi"]}PolicyCoverageTypes/{item.PolicyCoverageTypeId}");
+                        json = await response.Content.ReadAsStringAsync();
+                        var coverageType = JsonConvert.DeserializeObject<ICollection<PolicyCoverageType>>(json).FirstOrDefault();
+                        item.CoverageType = coverageType.CoverageType;
+                    }
+
                     return View(policyCoverageType.PolicyCoverageTypes);
                 }
                 else
@@ -57,7 +66,7 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
             {
                 var newPolicyCoverageType = new PolicyCoverageType
                 {   
-                    PolicyId = Convert.ToInt32(TempData["PolicyId"]),
+                    PolicyId = Convert.ToInt32(Session["PolicyId"]),
                     CoverageTypeId = Convert.ToInt32(collection["CoverageTypeId"]),
                     CoveragePercentage = Convert.ToInt32(collection["CoveragePercentage"])                   
                 };
@@ -72,7 +81,7 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                     var response = await httpClient.PostAsync(url, data);
                 }
 
-                return RedirectToAction("Details", new { id = TempData["PolicyId"] });
+                return RedirectToAction("Details", new { id = Session["PolicyId"] });
             }
             catch
             {
@@ -109,7 +118,7 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                 var newPolicyCoverageType = new PolicyCoverageType
                 {
                     PolicyCoverageTypeId = id,
-                    PolicyId = Convert.ToInt32(TempData["PolicyId"]),
+                    PolicyId = Convert.ToInt32(Session["PolicyId"]),
                     CoverageTypeId = Convert.ToInt32(collection["CoverageTypeId"]),
                     CoveragePercentage = Convert.ToInt32(collection["CoveragePercentage"])
                 };
@@ -122,9 +131,15 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                     var url = $"{ConfigurationManager.AppSettings["BaseUrlApi"]}PolicyCoverageTypes";
 
                     var response = await httpClient.PutAsync(url, data);
-                }
 
-                return RedirectToAction("Details", new { id = TempData["PolicyId"] });
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        ModelState.AddModelError(string.Empty, "The Coverage for this Type Of Risk is more than 50");
+                        return View(newPolicyCoverageType);
+                    }                    
+                }                
+
+                return RedirectToAction("Details", new { id = Session["PolicyId"] });
             }
             catch
             {
@@ -163,7 +178,7 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                     HttpResponseMessage response = await httpClient.DeleteAsync($"{ConfigurationManager.AppSettings["BaseUrlApi"]}PolicyCoverageTypes/{id}");
                 }
 
-                return RedirectToAction("Details", new { id = TempData["PolicyId"] });
+                return RedirectToAction("Details", new { id = Session["PolicyId"] });
             }
             catch
             {

@@ -133,7 +133,6 @@
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\PolicyClient.cs" />
     <Compile Include="Models\PolicyCoverageType.cs" />
-    <Compile Include="Models\PolicyCoverageTypeView.cs" />
     <Compile Include="Models\RiskType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

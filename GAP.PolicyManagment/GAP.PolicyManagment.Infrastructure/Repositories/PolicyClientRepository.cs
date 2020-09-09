@@ -3,6 +3,7 @@ using GAP.PolicyManagment.Core.Entities;
 using GAP.PolicyManagment.Core.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace GAP.PolicyManagment.Infrastructure.Repositories
 {
@@ -62,7 +63,7 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
             }
             else
             {
-                var query = (from policyCoveragee in _context.PolicyClients select policyCoveragee);
+                var query = (from policyCoveragee in _context.PolicyClients.Include(p => p.Policy) select policyCoveragee);
                 if (entity.PolicyClientId > 0)
                 {
                     query = query.Where(c => c.PolicyClientId == entity.PolicyClientId);

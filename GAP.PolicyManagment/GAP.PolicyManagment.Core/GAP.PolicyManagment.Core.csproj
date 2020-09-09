@@ -75,6 +75,13 @@
     <Compile Include="Services\Interface\IPolicyService.cs" />
     <Compile Include="Services\Interface\IRiskTypeService.cs" />
     <Compile Include="Services\Implementation\PolicyCoverageTypeService.cs" />
+    <Compile Include="Services\Factory\Implementation\HighRisk.cs" />
+    <Compile Include="Services\Factory\Interface\IRiskFatory.cs" />
+    <Compile Include="Services\Factory\Interface\IRisk.cs" />
+    <Compile Include="Services\Factory\Implementation\LowRisk.cs" />
+    <Compile Include="Services\Factory\Implementation\MediumHighRisk.cs" />
+    <Compile Include="Services\Factory\Implementation\MediumRisk.cs" />
+    <Compile Include="Services\Factory\Implementation\RiskFactory.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

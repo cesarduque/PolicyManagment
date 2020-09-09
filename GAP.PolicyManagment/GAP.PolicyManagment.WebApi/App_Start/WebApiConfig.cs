@@ -1,5 +1,6 @@
 ﻿using GAP.PolicyManagment.Core;
 using GAP.PolicyManagment.Core.Repositories;
+using GAP.PolicyManagment.Core.Services;
 using GAP.PolicyManagment.Core.Services.Implementation;
 using GAP.PolicyManagment.Core.Services.Interface;
 using GAP.PolicyManagment.Infrastructure;
@@ -81,6 +82,11 @@ namespace GAP.PolicyManagment.WebApi
             using (var hierarchicalLifetimeManager = new HierarchicalLifetimeManager())
             {
                 container.RegisterType<IPolicyClientRepository, PolicyClientRepository>(hierarchicalLifetimeManager);
+            }
+
+            using (var hierarchicalLifetimeManager = new HierarchicalLifetimeManager())
+            {
+                container.RegisterType<IRiskFatory, RiskFactory>(hierarchicalLifetimeManager);
             }
 
             config.DependencyResolver = new UnityResolver(container);

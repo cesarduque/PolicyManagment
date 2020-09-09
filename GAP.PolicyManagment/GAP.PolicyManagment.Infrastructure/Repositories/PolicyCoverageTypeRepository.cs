@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace GAP.PolicyManagment.Infrastructure.Repositories
 {
@@ -57,11 +58,11 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
 
             if (entity == null)
             {
-                policyCoverageType = _context.PolicyCoverageTypes.ToList();
+                policyCoverageType = _context.PolicyCoverageTypes.Include(p => p.CoverageType).ToList();
             }
             else 
             {
-                var query = (from policyCoveragee in _context.PolicyCoverageTypes select policyCoveragee);
+                var query = (from policyCoveragee in _context.PolicyCoverageTypes.Include(p => p.CoverageType) select policyCoveragee);
                 if (entity.PolicyCoverageTypeId > 0)
                 {
                     query = query.Where(c => c.PolicyCoverageTypeId == entity.PolicyCoverageTypeId);
@@ -79,6 +80,7 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
         {
             var policyCoverageType = _context.PolicyCoverageTypes.Find(entity.PolicyCoverageTypeId);
             policyCoverageType.CoveragePercentage = entity.CoveragePercentage;
+            policyCoverageType.CoverageTypeId = entity.CoverageTypeId;
         }
     }
 }

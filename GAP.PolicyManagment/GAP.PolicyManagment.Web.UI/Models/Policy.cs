@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +21,7 @@ namespace GAP.PolicyManagment.Web.UI.Models
 
         public double Price { get; set; }
 
+        [Display(Name = "Risk")]
         public int RiskTypeId { get; set; }
 
         public RiskType RiskType { get; set; }

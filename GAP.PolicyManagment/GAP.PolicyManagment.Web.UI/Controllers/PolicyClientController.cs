@@ -31,6 +31,15 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                 {
                     var json = await response.Content.ReadAsStringAsync();
                     var policyClient = JsonConvert.DeserializeObject<ICollection<Client>>(json).FirstOrDefault();
+
+                    foreach (var item in policyClient.PolicyClients)
+                    {
+                        response = await httpClient.GetAsync($"{ConfigurationManager.AppSettings["BaseUrlApi"]}PolicyClients/{item.PolicyClientId}");
+                        json = await response.Content.ReadAsStringAsync();
+                        var policy = JsonConvert.DeserializeObject<ICollection<PolicyClient>>(json).FirstOrDefault();
+                        item.Policy = policy.Policy;
+                    }
+
                     ViewBag.Records = true;
                     return View(policyClient.PolicyClients);
                 }
@@ -44,9 +53,33 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
         }
 
         // GET: PolicyClient/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpResponseMessage response = await httpClient.GetAsync($"{ConfigurationManager.AppSettings["BaseUrlApi"]}Policies/0");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var list = JsonConvert.DeserializeObject<ICollection<Policy>>(json);
+
+                    var model = new PolicyClient
+                    {
+                        PolicyCollection = list.Select(c => new SelectListItem
+                        {
+                            Value = c.PolicyId.ToString(),
+                            Text = c.Name
+                        }
+                            )
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    return View();
+                }
+            }            
         }
 
         // POST: PolicyClient/Create

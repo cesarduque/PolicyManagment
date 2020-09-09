@@ -66,7 +66,6 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                 {
                     return View();
                 }
-
             }   
             
         }
@@ -115,8 +114,19 @@ namespace GAP.PolicyManagment.Web.UI.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var policy = JsonConvert.DeserializeObject<ICollection<Policy>>(json);
-                    return View(policy.FirstOrDefault());
+                    var policy = JsonConvert.DeserializeObject<ICollection<Policy>>(json).FirstOrDefault();
+
+                    response = await httpClient.GetAsync($"{ConfigurationManager.AppSettings["BaseUrlApi"]}RiskTypes/0");
+                    json = await response.Content.ReadAsStringAsync();
+                    var list = JsonConvert.DeserializeObject<ICollection<RiskType>>(json);
+
+                    policy.RiskTypeCollection = list.Select(c => new SelectListItem
+                    {
+                        Value = c.RiskTypeId.ToString(),
+                        Text = c.Name
+                    });
+
+                    return View(policy);
                 }
                 else
                 {                    

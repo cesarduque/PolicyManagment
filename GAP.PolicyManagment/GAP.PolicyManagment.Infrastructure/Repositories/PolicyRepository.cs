@@ -58,11 +58,11 @@ namespace GAP.PolicyManagment.Infrastructure.Repositories
 
             if (entity == null)
             {
-                policies = _context.Policies.ToList();
+                policies = _context.Policies.Include(p => p.PolicyCoverageTypes).Include(p => p.RiskType).ToList();
             }
             else
             {
-                var query = (from policy in _context.Policies.Include(p => p.PolicyCoverageTypes) select policy);
+                var query = (from policy in _context.Policies.Include(p => p.PolicyCoverageTypes).Include(p => p.RiskType) select policy);
                 if (entity.PolicyId > 0)
                 {
                     query = query.Where(c => c.PolicyId == entity.PolicyId);

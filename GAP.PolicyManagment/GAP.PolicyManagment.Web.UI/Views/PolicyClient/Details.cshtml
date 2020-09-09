@@ -30,7 +30,7 @@
                 @Html.DisplayFor(modelItem => item.ClientId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PolicyId)
+                @Html.DisplayFor(modelItem => item.Policy.Name)
             </td>
             <td>                
                 @Html.ActionLink("Delete", "Delete", new { id = item.PolicyClientId })
